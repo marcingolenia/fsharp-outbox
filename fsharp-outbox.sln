@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution_files", "solution_files", "{8E1BC807-510C-4E04-94D9-586B5933C19B}"
+ProjectSection(SolutionItems) = preProject
+	database.sql = database.sql
+	docker-compose.yml = docker-compose.yml
+EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B3C55E05-8D42-4CC9-94B8-FECDD37D266E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Outbox", "src\Outbox\Outbox.fsproj", "{4D927792-2C64-4704-9813-E7A62387C0DC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{AA173A94-8A32-47BB-BE11-5E59026EC2BF}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Acceptance", "tests\Acceptance\Acceptance.fsproj", "{08B7F93F-1DFC-4042-8431-27892FAFDB1F}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "_Toolbox", "tests\_Toolbox\_Toolbox.fsproj", "{DADC3E39-6CD9-40F3-AE4F-0006663C5810}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "RebusMessaging", "src\RebusMessaging\RebusMessaging.fsproj", "{F7CEA07D-DE48-4456-A7AA-091EE99C94B6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4D927792-2C64-4704-9813-E7A62387C0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D927792-2C64-4704-9813-E7A62387C0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D927792-2C64-4704-9813-E7A62387C0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D927792-2C64-4704-9813-E7A62387C0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08B7F93F-1DFC-4042-8431-27892FAFDB1F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08B7F93F-1DFC-4042-8431-27892FAFDB1F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08B7F93F-1DFC-4042-8431-27892FAFDB1F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08B7F93F-1DFC-4042-8431-27892FAFDB1F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DADC3E39-6CD9-40F3-AE4F-0006663C5810}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DADC3E39-6CD9-40F3-AE4F-0006663C5810}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DADC3E39-6CD9-40F3-AE4F-0006663C5810}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DADC3E39-6CD9-40F3-AE4F-0006663C5810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F7CEA07D-DE48-4456-A7AA-091EE99C94B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7CEA07D-DE48-4456-A7AA-091EE99C94B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F7CEA07D-DE48-4456-A7AA-091EE99C94B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F7CEA07D-DE48-4456-A7AA-091EE99C94B6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{4D927792-2C64-4704-9813-E7A62387C0DC} = {B3C55E05-8D42-4CC9-94B8-FECDD37D266E}
+		{08B7F93F-1DFC-4042-8431-27892FAFDB1F} = {AA173A94-8A32-47BB-BE11-5E59026EC2BF}
+		{DADC3E39-6CD9-40F3-AE4F-0006663C5810} = {AA173A94-8A32-47BB-BE11-5E59026EC2BF}
+		{F7CEA07D-DE48-4456-A7AA-091EE99C94B6} = {B3C55E05-8D42-4CC9-94B8-FECDD37D266E}
+	EndGlobalSection
+EndGlobal

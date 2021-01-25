@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Secret!Passw0rd
+      POSTGRES_USER: postgres
+      POSTGRES_DB: outbox
+    ports:
+        - 5432:5432
+    volumes: 
+        - ./database.sql:/docker-entrypoint-initdb.d/database.sql
+  rabbitmq:
+    image: 'rabbitmq:3.6-management-alpine'
+    hostname: localhost-rabbit
+    ports:
+      - '15672:15672'
+      - '5672:5672'
