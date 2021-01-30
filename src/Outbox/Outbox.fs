@@ -9,12 +9,12 @@ module Outbox =
   [<Literal>]
   let ParallelizationThreshold = 10
   
-  let commit (generateId: unit -> int64) save notifications =
+  let commit generateId save notifications =
     let outboxMessages =
       notifications |> List.map (fun notification ->
         { Id = generateId()
           OccuredOn = DateTime.UtcNow
-          Payload = JsonConvert.SerializeObject(notification)
+          Payload = JsonConvert.SerializeObject notification
           Type = notification.GetType().FullName })
     async { do! save outboxMessages }
   
