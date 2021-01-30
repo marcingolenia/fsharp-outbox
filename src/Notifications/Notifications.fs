@@ -6,11 +6,6 @@ type WhateverHappened =
   { Id: int64
     SomeText: string
     Amount: decimal }
-  
-type CrashTestsWhateverHappened =
-  { Id: int64
-    RefId: int
-    Amount: decimal }
 
 type InvoiceIssued = {
     Id: int64
