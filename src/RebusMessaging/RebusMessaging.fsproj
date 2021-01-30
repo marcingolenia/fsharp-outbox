@@ -6,12 +6,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Compile Include="Publisher.fs" />
+        <Compile Include="Messaging.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Rebus" Version="6.4.1" />
       <PackageReference Include="Rebus.RabbitMq" Version="7.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Notifications\Notifications.fsproj" />
     </ItemGroup>
 
 </Project>

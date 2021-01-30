@@ -9,6 +9,10 @@ module DapperFSharp =
   let sqlQuery<'Result> (query: string) (connection: IDbConnection): Async<'Result seq> =
     connection.QueryAsync<'Result>(query)
     |> Async.AwaitTask
+    
+  let sqlQueryBy<'Result> (query: string) (param: obj)  (connection: IDbConnection): Async<'Result seq> =
+    connection.QueryAsync<'Result>(query, param)
+    |> Async.AwaitTask
 
   let sqlExecute (sql: string) (param: obj) (connection: IDbConnection) =
     connection.ExecuteAsync(sql, param)

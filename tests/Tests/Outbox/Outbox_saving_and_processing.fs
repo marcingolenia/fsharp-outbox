@@ -1,52 +1,43 @@
 module Outbox_saving_and_processing
 
-open Thoth.Json.Net
 open Xunit
 open Outbox
 open PostgresPersistence
 open FsUnit.Xunit
 open Toolbox
-
-type InvoiceIssued = {
-    Id: int64
-    Number: string
-    Amount: decimal
-}
-
-type InvoiceNotifications =
-    | InvoiceIssued of InvoiceIssued
+open Notifications
+open Newtonsoft.Json
     
-let private decodePayload message =
-    Decode.Auto.fromString<InvoiceNotifications>(message.Payload,
-                                                 CaseStrategy.PascalCase,
-                                                 Extra.empty |> Extra.withInt64 |> Extra.withDecimal)
-    |> function | Ok value -> value | Error error -> failwith $"Failed to convert: {error}"
+let private decode (message: string) =
+    JsonConvert.DeserializeObject<InvoiceNotifications>(message)
 
 [<Fact>]
 let ``GIVEN some notifications WHEN commit THEN messages are stored`` () =
     // Arrange
-    let expectedEvent = { Id = 123L;  Number = "FV1"; Amount = 100M } |> InvoiceNotifications.InvoiceIssued
+    let expectedNotification = { Id = 123L;  Number = "FV1"; Amount = 100M } |> InvoiceNotifications.InvoiceIssued
     let id = generateId()
     // Act
-    Outbox.commit (fun _ -> id) (save DbConnection.create) [expectedEvent] |> Async.RunSynchronously
-    let messages = read DbConnection.create |> Async.RunSynchronously
+    Outbox.commit (fun _ -> id) (save DbConnection.create) [expectedNotification] |> Async.RunSynchronously
+    let messages = read DbConnection.create |> Async.RunSynchronously 
     // Assert
     let message = messages |> Seq.find(fun message -> message.Id = id)
-    let actualEvent = message |> decodePayload
-    actualEvent |> should equal expectedEvent
+    let actualNotification = message.Payload |> decode
+    actualNotification |> should equal expectedNotification
 
 [<Fact>] 
 let ``GIVEN some notifications WHEN process THEN messages are published`` () =
     // Arrange
-    let mutable publishedMessage : OutboxMessage option = None
+    let mutable publishedNotification : InvoiceNotifications option = None
     let expectedNotification = { Id = 123L;  Number = "FV1"; Amount = 100M } |> InvoiceNotifications.InvoiceIssued
-    let publish = fun message -> async { publishedMessage <- Some message } 
+    let publish = fun (message: obj) -> async {
+        publishedNotification <- Some (message :?> InvoiceNotifications)
+    } 
     let id = generateId()
     Outbox.commit (fun _ -> id) (save DbConnection.create) [expectedNotification] |> Async.RunSynchronously
     // Act
     Outbox.execute (read DbConnection.create) (moveToProcessed DbConnection.create) publish |> Async.RunSynchronously
     // Assert
-    (publishedMessage.Value |> decodePayload) |> should equal expectedNotification
+    publishedNotification.Value |> should equal expectedNotification
     
 [<Fact>] 
 let ``GIVEN some notifications WHEN process THEN message aren't read again.`` () =

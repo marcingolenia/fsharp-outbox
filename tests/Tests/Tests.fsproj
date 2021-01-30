@@ -5,12 +5,15 @@
 
         <IsPackable>false</IsPackable>
         <GenerateProgramFile>false</GenerateProgramFile>
+        <RootNamespace>Acceptance</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
         <Compile Include="Outbox\DbConnection.fs" />
         <Compile Include="Outbox\Outbox_saving_and_processing.fs" />
         <Compile Include="RebusMessaging\publishing_messages.fs" />
+        <Compile Include="Demo_RabbitWithPostgresOutbox\when_outbox_processes_then_messages_are_published.fs" />
+        <Compile Include="Demo_RabbitWithPostgresOutbox\when_outbox_crashes_then_processed_messages_are_published.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
