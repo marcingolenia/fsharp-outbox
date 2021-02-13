@@ -7,11 +7,11 @@ type WhateverHappened =
     SomeText: string
     Amount: decimal }
 
-type InvoiceIssued = {
+type OrderPlaced = {
     Id: int64
     Number: string
     Amount: decimal
 }
 
 type InvoiceNotifications =
-    | InvoiceIssued of InvoiceIssued
+    | InvoiceIssued of OrderPlaced
