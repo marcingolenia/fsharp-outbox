@@ -5,11 +5,16 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <Compile Include="PollingPublisher.fs" />
+        <Compile Include="QuartzHostedService.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="Giraffe" Version="5.0.0-rc-6" />
+      <PackageReference Include="Quartz" Version="3.2.4" />
+      <PackageReference Include="Quartz.AspNetCore" Version="3.2.4" />
+      <PackageReference Include="TaskBuilder.fs" Version="2.1.0" />
     </ItemGroup>
 
 </Project>
