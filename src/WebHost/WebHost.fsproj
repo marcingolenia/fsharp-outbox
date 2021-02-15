@@ -1,20 +1,24 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
-
     <ItemGroup>
+        <Compile Include="IdGen.fs" />
+        <Compile Include="CompositionRoot.fs" />
         <Compile Include="PollingPublisher.fs" />
         <Compile Include="QuartzHostedService.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
-
     <ItemGroup>
       <PackageReference Include="Giraffe" Version="5.0.0-rc-6" />
+        <PackageReference Include="IdGen" Version="3.0.0" />
       <PackageReference Include="Quartz" Version="3.2.4" />
       <PackageReference Include="Quartz.AspNetCore" Version="3.2.4" />
       <PackageReference Include="TaskBuilder.fs" Version="2.1.0" />
     </ItemGroup>
-
+    <ItemGroup>
+      <ProjectReference Include="..\Notifications\Notifications.fsproj" />
+      <ProjectReference Include="..\Outbox\Outbox.fsproj" />
+      <ProjectReference Include="..\RebusMessaging\RebusMessaging.fsproj" />
+    </ItemGroup>
 </Project>
