@@ -20,6 +20,7 @@ module Outbox =
   
   let execute read setProcessed publish =
     async {
+      printfn $"%A{DateTime.Now} Outbox processing...."
       let! (messages: OutboxMessage seq) = read 
       let notificationAssembly = Assembly.GetAssembly(typeof<Marker>)   
       let processes = messages |> Seq.map(fun message ->

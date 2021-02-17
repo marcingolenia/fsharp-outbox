@@ -22,10 +22,11 @@ let ``GIVEN pending outbox messages WHEN execute THEN messages are published to 
         | _ when expectedNotification2.Id = message.Id -> tcs2.SetResult message
         | _ -> failwith $"This shouldn't happened, %s{nameof WhateverHappened} with unexpected Id: %d{message.Id} was received."
     }
-    use activator = new BuiltinHandlerActivator()
-    use bus = Messaging.start handler
+    use activator = new BuiltinHandlerActivator() |> Messaging.registerHandler handler
+    use bus = Messaging.configure "amqp://localhost"
+                              "test-connection"
                               activator
-                              "amqp://localhost" |> Async.RunSynchronously
+    bus |> Messaging.turnSubscriptionsOn Messaging.markerNeighbourTypes<Marker> |> Async.RunSynchronously
     Outbox.commit generateId (save DbConnection.create) [expectedNotification1; expectedNotification2] |> Async.RunSynchronously
     // Act
     Outbox.execute (read DbConnection.create)

@@ -1,21 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>RebusPublisher</RootNamespace>
     </PropertyGroup>
-
     <ItemGroup>
         <Compile Include="Messaging.fs" />
     </ItemGroup>
-
     <ItemGroup>
       <PackageReference Include="Rebus" Version="6.4.1" />
       <PackageReference Include="Rebus.RabbitMq" Version="7.3.0" />
     </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Notifications\Notifications.fsproj" />
-    </ItemGroup>
-
 </Project>

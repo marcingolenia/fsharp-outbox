@@ -1,6 +1,5 @@
 namespace WebHost
 
-open System
 open System.Threading.Tasks
 open Quartz
 
@@ -8,15 +7,15 @@ module PollingPublisher =
     let trigger = TriggerBuilder
                     .Create()
                     .WithSimpleSchedule(fun scheduler ->
-                        scheduler.WithIntervalInSeconds(3).RepeatForever() |> ignore)
+                        scheduler.WithIntervalInSeconds(5)
+                                 .RepeatForever() |> ignore)
                     .Build()
                           
     [<DisallowConcurrentExecution>]
-    type Job() =
+    type Job(outboxExecute: Async<unit>) =
       interface IJob with
-        member _.Execute ctx =
-          printf "%s\n" (DateTime.Now.ToLongTimeString())
-          Task.CompletedTask
+        member _.Execute _ =
+          outboxExecute |> Async.StartAsTask :> Task
           
     let job = JobBuilder
                 .Create<Job>()

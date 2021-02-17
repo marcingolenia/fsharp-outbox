@@ -1,4 +1,4 @@
-﻿module Toolbox
+﻿module IdGenerator
 
     open System
     open IdGen

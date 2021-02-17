@@ -27,10 +27,11 @@ let ``GIVEN pending outbox messages WHEN execute AND publish crashes Tt relies o
       receivedNotifications.Add notification
       if receivedNotifications.Count = expectedNotifications.Length then tcs.SetResult receivedNotifications
     }
-    use activator = new BuiltinHandlerActivator()
-    use bus = Messaging.start handler
+    use activator = new BuiltinHandlerActivator() |> Messaging.registerHandler handler
+    use bus = Messaging.configure "amqp://localhost"
+                              "test-connection"
                               activator
-                              "amqp://localhost" |> Async.RunSynchronously
+    bus |> Messaging.turnSubscriptionsOn Messaging.markerNeighbourTypes<Marker> |> Async.RunSynchronously
     Outbox.commit generateId (save DbConnection.create) expectedNotifications |> Async.RunSynchronously
     let whateverType = typeof<WhateverHappened>.FullName
     let filteredRead =

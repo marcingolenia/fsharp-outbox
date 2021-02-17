@@ -3,10 +3,12 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
     <ItemGroup>
-        <Compile Include="IdGen.fs" />
+        <Compile Include="IdGenerator.fs" />
+        <Compile Include="NotificationHandlers.fs" />
         <Compile Include="CompositionRoot.fs" />
+        <Compile Include="HttpHandlers.fs" />
         <Compile Include="PollingPublisher.fs" />
-        <Compile Include="QuartzHostedService.fs" />
+        <Compile Include="QuartzHosting.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
     <ItemGroup>
