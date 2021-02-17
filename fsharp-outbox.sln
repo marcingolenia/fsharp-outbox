@@ -4,6 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution_files", "solution_
 ProjectSection(SolutionItems) = preProject
 	database.sql = database.sql
 	docker-compose.yml = docker-compose.yml
+	README.md = README.md
 EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B3C55E05-8D42-4CC9-94B8-FECDD37D266E}"
