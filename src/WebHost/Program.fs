@@ -26,7 +26,7 @@ module App =
       let root = CompositionRoot.compose
       Messaging.turnSubscriptionsOn
         Messaging.markerNeighbourTypes<Marker>
-        root.SubBus |> Async.RunSynchronously
+        root.MessageBus |> Async.RunSynchronously
       Host.CreateDefaultBuilder()
         .ConfigureWebHostDefaults(fun webHostBuilder ->
           webHostBuilder

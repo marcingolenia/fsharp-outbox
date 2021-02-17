@@ -11,28 +11,28 @@ module CompositionRoot =
   type Dependencies = {
     OutboxCommit: obj list -> Async<unit>
     OutboxExecute: Async<unit>
-    SubBus: IBus
+    MessageBus: IBus
     GenerateId: unit -> int64
   }
   
   let compose =
-    let pubBus = Messaging.configure
-                  "amqp://localhost"
-                  "pub-connection"
-                  (new BuiltinHandlerActivator())
-    let connectionS = "Host=localhost;User Id=postgres;Password=Secret!Passw0rd;Database=outbox;Port=5432"
+    let pubBus = Messaging.configureOneWay
+                   "amqp://localhost"
+                   "pubConnection"
+                   (new BuiltinHandlerActivator()|> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
+    let subBus = Messaging.configure
+                   "amqp://localhost"
+                   "subConnection"
+                   (new BuiltinHandlerActivator()|> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
+    let dbConnection = "Host=localhost;User Id=postgres;Password=Secret!Passw0rd;Database=outbox;Port=5432"
     {
       OutboxCommit = Outbox.commit
                        IdGenerator.generateId
-                       (PostgresPersistence.save (createSqlConnection connectionS))
+                       (PostgresPersistence.save (createSqlConnection dbConnection))
       OutboxExecute = Outbox.execute
-                        (PostgresPersistence.read (createSqlConnection connectionS))
-                        (PostgresPersistence.moveToProcessed (createSqlConnection connectionS))
+                        (PostgresPersistence.read (createSqlConnection dbConnection))
+                        (PostgresPersistence.moveToProcessed (createSqlConnection dbConnection))
                         (Messaging.publish pubBus)
-      SubBus = Messaging.configure
-                          "amqp://localhost"
-                          "subs-connection"
-                          (new BuiltinHandlerActivator()
-                           |> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
+      MessageBus = subBus
       GenerateId = IdGenerator.generateId
     }

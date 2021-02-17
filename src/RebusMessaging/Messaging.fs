@@ -25,7 +25,17 @@ module Messaging =
                                                     .ClientConnectionName(connectionName) |> ignore)
                .Logging(fun logConfig -> logConfig.Console(LogLevel.Info))
                .Start()
-    
+               
+    let configureOneWay (endpoint: string)
+                        (connectionName: string)
+                        (activator: BuiltinHandlerActivator)
+                        =
+      Configure.With(activator)
+               .Transport(fun transport -> transport.UseRabbitMqAsOneWayClient(endpoint)
+                                                    .ClientConnectionName(connectionName) |> ignore)
+               .Logging(fun logConfig -> logConfig.Console(LogLevel.Info))
+               .Start()
+               
     let registerHandler
       (handler: 'a -> Async<Unit>)
       (activator: BuiltinHandlerActivator) =

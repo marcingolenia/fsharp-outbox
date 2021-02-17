@@ -23,9 +23,7 @@ let ``GIVEN pending outbox messages WHEN execute THEN messages are published to 
         | _ -> failwith $"This shouldn't happened, %s{nameof WhateverHappened} with unexpected Id: %d{message.Id} was received."
     }
     use activator = new BuiltinHandlerActivator() |> Messaging.registerHandler handler
-    use bus = Messaging.configure "amqp://localhost"
-                              "test-connection"
-                              activator
+    use bus = Messaging.configure "amqp://localhost" "two-way-connection-tests" activator
     bus |> Messaging.turnSubscriptionsOn Messaging.markerNeighbourTypes<Marker> |> Async.RunSynchronously
     Outbox.commit generateId (save DbConnection.create) [expectedNotification1; expectedNotification2] |> Async.RunSynchronously
     // Act

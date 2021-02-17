@@ -18,9 +18,7 @@ let ``GIVEN a notification WHEN published THEN it can be consumed`` () =
       tcs.SetResult message
     }
     use activator = new BuiltinHandlerActivator() |> registerHandler handler
-    use bus = configure "amqp://localhost"
-                    "test-connection"
-                    activator
+    use bus = configure "amqp://localhost" "two-way-connection-tests" activator
     bus |> turnSubscriptionsOn markerNeighbourTypes<Marker> |> Async.RunSynchronously
     // Act
     publish bus expectedNotification |> Async.RunSynchronously
