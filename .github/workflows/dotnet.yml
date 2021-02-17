@@ -14,11 +14,11 @@ jobs:
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: '5.0.101'
+    - name: Docker Compose Action
+      uses: isbang/compose-action@v0.1.1
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
       run: dotnet build --no-restore
-    - name: Docker Compose Action
-      uses: isbang/compose-action@v0.1.1
     - name: Test
       run: dotnet test 
