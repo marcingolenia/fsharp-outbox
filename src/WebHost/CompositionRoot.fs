@@ -19,11 +19,11 @@ module CompositionRoot =
     let pubBus = Messaging.configureOneWay
                    "amqp://localhost"
                    "pubConnection"
-                   (new BuiltinHandlerActivator()|> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
+                   (new BuiltinHandlerActivator())
     let subBus = Messaging.configure
                    "amqp://localhost"
                    "subConnection"
-                   (new BuiltinHandlerActivator()|> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
+                   (new BuiltinHandlerActivator() |> Messaging.registerHandler Handlers.printWhateverHappenedWithSmiley)
     let dbConnection = "Host=localhost;User Id=postgres;Password=Secret!Passw0rd;Database=outbox;Port=5432"
     {
       OutboxCommit = Outbox.commit
