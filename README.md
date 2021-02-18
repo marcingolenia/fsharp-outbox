@@ -5,6 +5,7 @@ This is a sample implementation of the transactional outbox pattern and polling 
 * PostgreSQL 
 * RabbitMq with Rebus
 
+The related blog-post can be found here: https://mcode.it/blog/2021-02-18-fsharp_outbox/ 
 
 # Instructions
 * You will need [.NET 5.0](https://dotnet.microsoft.com/download/dotnet/5.0) to build, test, run the app.
